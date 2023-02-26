@@ -1,9 +1,25 @@
 import { useState } from 'react';
+import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Title from './components/Title';
+import Form from './components/Form';
+import Results from './components/Results';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [word, setWord] = useState<string>(''); // 入力キーワードを保存するstate
+  const [photo, setPhoto] = useState([]); // resのデータを保存するstate.データは配列
+
+  const getPhotoData = (e: Event) => {
+    e.preventDefault();
+    axios
+      .get(
+        `https://api.unsplash.com/search/photos?query=${word}&client_id=Ge9HC54-VSLXfzHCmAx6VklmtdvPhZXX-h4OJ7-o-cs`,
+      )
+      .then((res) => {
+        setPhoto(res.data.results); // date.resultsにデータが存在
+      });
+  };
 
   return (
     <div className="App">
@@ -13,7 +29,7 @@ function App() {
         <h1 className="border-b-4 border-solid border-b-violet-400 pb-2 text-3xl font-bold text-violet-400">
           About / 私について
         </h1>
-        <div className="flex max-w-5xl flex-col justify-center px-4">
+        <div className="mx-auto flex max-w-5xl flex-col justify-center px-4">
           <div className="mr-auto w-[55%]">
             <h2 className="mt-8 text-3xl text-teal-800">自己紹介🧏</h2>
             <p className="mt-4 text-lg leading-8">
@@ -51,7 +67,7 @@ function App() {
             </p>
             <p className="mt-4 text-xl text-teal-700">◎趣味</p>
             <ul className="mt-2 leading-8 [&_li]:text-lg [&_li]:text-gray-600">
-              <li className="">サッカー中継観戦、</li>
+              <li className="">サッカー中継観戦</li>
               <li>漫画/アニメ/映画鑑賞</li>
               <li>ギター</li>
               <li>など</li>
@@ -148,9 +164,13 @@ function App() {
         <p className="mt-8">
           ここでは、Reactで作成した画像ギャラリーを設置しています。
         </p>
-        <p className="mt-4">使用API: XXX</p>
+        <p className="">なにか文字を入れて検索してみて下さい。</p>
 
-        <div className="mt-8 "></div>
+        <Title />
+        {/* setWordのstateを引数として渡す */}
+        <Form setWord={setWord} getPhotoData={getPhotoData} />
+        {/* photoのstateを引数として渡す */}
+        <Results photo={photo} />
       </section>
       <Footer />
     </div>
