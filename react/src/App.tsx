@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Title from './components/Title';
+import LikeButton from './components/LikeButton';
 import Form from './components/Form';
 import Results from './components/Results';
 
@@ -161,12 +161,20 @@ function App() {
         <h1 className="border-b-4 border-solid border-b-violet-400 pb-2 text-3xl font-bold text-violet-400">
           Gallery / ギャラリー
         </h1>
-        <p className="mt-8">
-          ここでは、Reactで作成した画像ギャラリーを設置しています。
+        <p className="mt-8 text-xl text-blue-800">
+          ここでは、Reactのstateを用いて実装した、何か動くコンポーネントを設置しています。
         </p>
-        <p className="">なにか文字を入れて検索してみて下さい。</p>
 
-        <Title />
+        <h2 className="mt-4 mb-2 text-2xl text-teal-700">いいねボタン👍</h2>
+        <LikeButton />
+        <h2 className="mt-16 text-2xl text-teal-700">画像検索ギャラリー🔍</h2>
+        <p className="mt-2">なにか文字を入れて検索してみて下さい。</p>
+        <p className="text-right">
+          By{' '}
+          <a href="https://unsplash.com/" target="_blank">
+            Unsplash
+          </a>
+        </p>
         {/* setWordのstateを引数として渡す */}
         <Form setWord={setWord} getPhotoData={getPhotoData} />
         {/* photoのstateを引数として渡す */}
